@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Votaciones IoT</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+
+<body>
+  <!--Navbar-->
+  <nav class="navbar bg-body-tertiary">
+    <div class="container-fluid align-text-center">
+      <div class="navbar-brand d-flex align-items-center justify-content-center" s>
+        <img src="/assets/imagen.avif" alt="Logo" width="48" height="48" class="d-inline-block align-text-top">
+        <h1>Jornada de Votaciones 2023</h1>
+      </div>
+    </div>
+  </nav>
+  <!--Estructura Tarjetas-->
+  <div class="container-fluid text-center h-100">
+    <div class="row d-flex align-items-center justify-content-center">
+      <div class="col-lg-4 col-md-6 col-12 mt-4 mb-4">
+        <div class="card mx-auto rounded-4 shadow-lg border-0" style="width: 18rem;">
+          <img src="/assets/imagen.avif" class="card-img-top rounded-top-4" alt="...">
+          <div class="card-body">
+            <h2>Partido 1</h2>
+            <p class="card-text">VOTOS</p>
+            <p class="card-text">4</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 col-12 mt-4 mb-4 mx-auto">
+        <div class="card mx-auto rounded-4 shadow-lg border-0" style="width: 18rem;">
+          <img src="/assets/imagen.avif" class="card-img-top rounded-top-4" alt="...">
+          <div class="card-body">
+            <h2>Partido 2</h2>
+            <p class="card-text">VOTOS</p>
+            <p class="card-text">8</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 col-12 mt-4 mb-4">
+        <div class="card mx-auto rounded-4 shadow-lg border-0" style="width: 18rem;">
+          <img src="/assets/imagen.avif" class="card-img-top rounded-top-4" alt="...">
+          <div class="card-body">
+            <h2>Partido 3</h2>
+            <p class="card-text">VOTOS</p>
+            <p class="card-text">2</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mx-auto">
+      <div id="locationMap" class="mx-auto m-5 rounded-4 shadow-lg border-0" style="width:300px;height:300px;"></div>
+    </div>
+    <div class="row">
+      <footer class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        <div class="container">
+          <p class="m-0 text-muted">© 2023 Internet de las Cosas</p>
+          <ul class="list-unstyled">
+            <li>Kevin Lázaro Cernas</li>
+            <li>Mónica Gabriela Verdín Aguilar</li>
+            <li></li>
+            <li></li>
+          </ul>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  <script>
+    function map() {
+      let myLatLng = { lat: 19.247808035222896, lng: -103.69732848896615 }
+
+      let mapProp = {
+        center: new google.maps.LatLng(myLatLng),
+        zoom: 12,
+      };
+
+      let map = new google.maps.Map(document.getElementById("locationMap"), mapProp);
+
+      new google.maps.Marker({
+        position: myLatLng,
+        map,
+        title: "Casilla de votación",
+      });
+    }
+  </script>
+  <script src='https://maps.googleapis.com/maps/api/js?key=<%=API_KEY%>&callback=map'>
+  </script>
+</body>
+
+</html>
