@@ -9,7 +9,6 @@
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link rel="stylesheet" href="/assets/style.css">
   <link href="https://fonts.cdnfonts.com/css/gg-sans-2" rel="stylesheet">
-  <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
 </head>
 
 <body>
@@ -25,7 +24,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-4">
           <li class="nav-item">
-            <a class="nav-link active text-primary" aria-current="page" href="/">Inicio</a>
+            <a class="nav-link active" aria-current="page" href="/">Inicio</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/presidente">Presidencia</a>
@@ -34,7 +33,7 @@
             <a class="nav-link" href="/gobernador">Gobernación</a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link font-weight-bold" href="/municipal">Municipal</a>
+            <a class="nav-link text-primary" href="/municipal">Municipal</a>
           </li>
         </ul>
       </div>
@@ -44,17 +43,19 @@
   <div class="container-fluid text-center h-100">
     <div class="roww d-flex align-items-center justify-content-center pt-5">
       <h1>
-        CANDIDATURAS DISPUTADAS
+        PRESIDENTE MUNICIPAL
       </h1>
     </div>
-    <div class="row d-flex align-items-center justify-content-center">
+    <div class="row d-flex align-items-center justify-content-center mb-4">
       <div class="col-lg-4 col-md-6 col-12 mt-4 mb-4">
         <div class="card mx-auto rounded-4 shadow-lg border-0" style="width: 18rem;">
-          <a href="/presidente">
-            <img src="/assets/img/imagen.avif" class="card-img-top rounded-top-4" alt="...">
-          </a>
+          <img src="/assets/img/CandidatoHombre4.jpeg" class="card-img-top rounded-top-4" alt="...">
           <div class="card-body">
-            <h2>Presidente de la Republica</h2>
+            <h2>Federico Aguilar</h2>
+            <div class="d-flex align-items-center justify-content-center">
+              <img src="/assets/img/PartidoUP.jpeg" class="rounded-circle" style="width: 45px;" style="height: 288px;" alt="">
+              <p class="m-0">Unión del Pueblo</p>
+            </div>
             <p class="card-text">VOTOS</p>
             <p class="card-text" id="votos1">0</p>
           </div>
@@ -62,11 +63,13 @@
       </div>
       <div class="col-lg-4 col-md-6 col-12 mt-4 mb-4 mx-auto">
         <div class="card mx-auto rounded-4 shadow-lg border-0" style="width: 18rem;">
-          <a href="/gobernador">
-            <img src="/assets/img/imagen.avif" class="card-img-top rounded-top-4" alt="...">
-          </a>
+          <img src="/assets/img/CandidatoHombre5.jpeg" class="card-img-top rounded-top-4" style="height: 288px;" alt="...">
           <div class="card-body">
-            <h2>Gobernador</h2>
+            <h2>Teodoro Brambilla</h2>
+            <div class="d-flex align-items-center justify-content-center">
+              <img src="/assets/img/PartidoFN.jpeg" class="rounded-circle" style="width: 45px;" alt="">
+              <p class="m-0">Fuerza Nacional</p>
+            </div>
             <p class="card-text">VOTOS</p>
             <p class="card-text" id="votos2">0</p>
           </div>
@@ -74,22 +77,18 @@
       </div>
       <div class="col-lg-4 col-md-6 col-12 mt-4 mb-4">
         <div class="card mx-auto rounded-4 shadow-lg border-0" style="width: 18rem;">
-          <a href="/municipal">
-            <img src="/assets/img/imagen.avif" class="card-img-top rounded-top-4" alt="...">
-          </a>
+          <img src="/assets/img/CandidataMujer4.jpeg" class="card-img-top rounded-top-4" style="height: 288px;"alt="...">
           <div class="card-body">
-            <h2>Presidente Municipal</h2>
+            <h2>Gabriela Gallardo</h2>
+            <div class="d-flex align-items-center justify-content-center">
+              <img src="/assets/img/PartidoPC.jpeg" class="rounded-circle" style="width: 45px;" alt="">
+              <p class="m-0">Poder Ciudadano</p>
+            </div>
             <p class="card-text">VOTOS</p>
             <p class="card-text" id="votos3">0</p>
           </div>
         </div>
       </div>
-    </div>
-    <div class="row mx-auto">
-      <div class="mt-4">
-        <h2>UBICACIÓN DE LA CASILLA</h2>
-      </div>
-      <div id="locationMap" class="mx-auto m-5 rounded-4 shadow-lg border-0" style="width:300px;height:300px;"></div>
     </div>
     <div class="row">
       <footer class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
@@ -114,30 +113,24 @@
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
     crossorigin="anonymous"></script>
   <script>
-    let map
-    let marker
-
-    function initMap() {
-      map = new google.maps.Map(document.getElementById("locationMap"), {
-        center: { lat: 19.32491607904334, lng: -103.75702976599368 },
-        zoom: 12,
-      })
-
-      marker = new google.maps.Marker({
-        position: { lat: 19.32491607904334, lng: -103.75702976599368 },
-        map: map,
-        title: "Casilla de votación",
-      })
-    }
     function updateCoords(lat, lng) {
       let nuevaUbicacion = new google.maps.LatLng(lat, lng)
       marker.setPosition(nuevaUbicacion)
       map.setCenter(nuevaUbicacion)
     }
+
+    const socket = new WebSocket("ws://localhost:3000")
+
+    socket.addEventListener("open", (event) => {
+      console.log("WebSocket connection opened", event);
+    });
+
+    socket.addEventListener("message", (event) => {
+      let messageRecieved = JSON.parse(event.data)
+      console.log("WebSocket message received:", recibido.voto1)
+    });
   </script>
-  <script src='https://maps.googleapis.com/maps/api/js?key=<%=API_KEY%>&callback=initMap'>
   </script>
-  <script src="/assets/js/index.js"></script>
 </body>
 
 </html>

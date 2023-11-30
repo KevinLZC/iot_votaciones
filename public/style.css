@@ -1,5 +1,26 @@
 h1 {
   font-size: 2rem;
+  font-family: 'gg sans SemiBold', sans-serif;
+}
+
+h2, h3 {
+  font-size: 1.5rem;
+  font-family: 'gg sans Medium', sans-serif;
+}
+
+ul, li {
+  font-size: 1.2rem;
+  font-family: 'gg sans Medium', sans-serif;
+}
+
+ul, li, .lista-derechos {
+  font-size: 1.2rem;
+  font-family: 'gg sans Normal', sans-serif;
+  color: gray;
+}
+
+body {
+  font-family: 'gg sans Normal', sans-serif;
 }
 
 @media screen and (max-width: 768px) {

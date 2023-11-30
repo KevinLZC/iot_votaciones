@@ -1,25 +1,32 @@
 const express = require("express")
+const votoController = require("../controllers/votacion")
 const router = express.Router()
 
 router.get("/", (req, res) => {
-  const API_KEY = process.env.API_KEY,
-        EMQX_HOST = process.env.EMQX_HOST,
-        EMQX_PORT = process.env.EMQX_PORT,
-        EMQX_USERNAME = process.env.EMQX_USERNAME,
-        EMQX_PASSWORD = process.env.EMQX_PASSWORD,
-        EMQX_TOPIC = process.env.EMQX_TOPIC
-
+  const API_KEY = process.env.API_KEY
 
   res.render("index",
     {
       API_KEY: API_KEY,
-      EMQX_HOST: EMQX_HOST,
-      EMQX_PORT: EMQX_PORT,
-      EMQX_USERNAME: EMQX_USERNAME,
-      EMQX_PASSWORD: EMQX_PASSWORD,
-      EMQX_TOPIC: EMQX_TOPIC
     })
 })
+
+router.post("/addVotacion", (req, res) => {
+  votoController.addVoto(req, res)
+})
+
+router.get("/presidente", (req, res) => {
+  res.render("presidente")
+})
+
+router.get("/gobernador", (req, res) => {
+  res.render("gobernador")
+})
+
+router.get("/municipal", (req, res) => {
+  res.render("municipal")
+})
+
 router.post("/addVotación", (req, res) => {
   // ruta para mandar la información a la base de datos
   let rings = false;
