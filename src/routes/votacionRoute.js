@@ -15,6 +15,10 @@ router.post("/addVotacion", (req, res) => {
   votoController.addVoto(req, res)
 })
 
+router.post("/updateEstado", (req, res) => {
+  votoController.updateEstado(req, res)
+})
+
 router.get("/presidente", (req, res) => {
   res.render("presidente")
 })
@@ -25,6 +29,10 @@ router.get("/gobernador", (req, res) => {
 
 router.get("/municipal", (req, res) => {
   res.render("municipal")
+})
+
+router.get("/grafico", (req, res) => {
+  res.render("grafico")
 })
 
 router.post("/addVotación", (req, res) => {

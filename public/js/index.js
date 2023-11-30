@@ -14,13 +14,22 @@ async function postData(data) {
   });
 }
 
-socket.addEventListener("message", (event) => {
-  let messageRecieved = JSON.parse(event.data)
-  postData(messageRecieved)
-    .then(() => {
-      console.log("Datos enviados")
-    })
-    .catch((error) => {
-      console.error(error)
-    })
+async function updateEstado(data) {
+  await fetch('/updateEstado', {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+}
+let windowPath = window.location.pathname
+socket.addEventListener("message", async (event) => {
+  let messageReceived = JSON.parse(event.data)
+  postData(messageReceived)
+  if(windowPath === "/"){
+    
+  }
 })
+
+console.log(window.location.pathname)

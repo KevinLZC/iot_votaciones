@@ -1,29 +1,35 @@
 const Voto = require("../models/voto")
+const Estado = require("../models/estado");
 
 module.exports = {
   addVoto: (req, res) => {
     const nuevoVoto = Voto({
-      cargoPresidente: {
-        partido: req.body.cargoPresidente.partido,
-        candidato: req.body.cargoPresidente.candidato,
-      },
-      cargoGobernador: {
-        partido: req.body.cargoGobernador.partido,
-        candidato: req.body.cargoGobernador.candidato,
-      },
-      cargoMunicipal: {
-        partido: req.body.cargoMunicipal.partido,
-        candidato: req.body.cargoMunicipal.candidato,
-      },
-      fecha: {
-        dia: req.body.fecha.dia,
-        hora: req.body.fecha.hora,
-      },
-      ubicacion: {
-        lat: req.body.ubicacion.lat,
-        lng: req.body.ubicacion.lng,
-      },
-
+      ID_Casilla: req.body.ID_Casilla,
+      Datos: [
+        {
+          Partido: req.body.Datos[0].Partido,
+          Candidatura: req.body.Datos[0].Candidatura,
+          Candidato: req.body.Datos[0].Candidato
+        },
+        {
+          Partido: req.body.Datos[1].Partido,
+          Candidatura: req.body.Datos[1].Candidatura,
+          Candidato: req.body.Datos[1].Candidato
+        },
+        {
+          Partido: req.body.Datos[2].Partido,
+          Candidatura: req.body.Datos[2].Candidatura,
+          Candidato: req.body.Datos[2].Candidato
+        },
+        {
+          Fecha: req.body.Datos[3].Fecha,
+          Hora: req.body.Datos[3].Hora
+        },
+        {
+          Latitud: req.body.Datos[4].Latitud,
+          Longitud: req.body.Datos[4].Longitud
+        }
+      ]
     })
     nuevoVoto
       .save()
@@ -36,4 +42,10 @@ module.exports = {
         res.status(500).json({ message: 'Error interno del servidor' });
       });
   },
+  updateEstado: async (req, res) => {
+    const update = { nombre: "Kevin" }
+    const filter = { partido: req.body.partido, nombre: req.body.candidato }
+    let estado = Estado.find({ filter })
+    console.log(estado.estado)
+  }
 }

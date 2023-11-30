@@ -15,15 +15,16 @@
 <body>
   <!--Navbar-->
   <nav class="navbar navbar-expand-lg sticky-top bg-body-tertiary">
-    <div class="container-fluid">
-      <img src="/assets/img/imagen.avif" alt="Logo" width="48" height="48" class="d-inline-block align-text-top">
-      <h1>Jornada de Votaciones 2023</h1>
+    <div class="container-fluid gap-3 d-flex justify-content-center align-items-center">
+      <img src="/assets/img/empresa.jpeg" alt="Logo" width="48" height="48"
+        class="d-inline-block align-text-top rounded-circle">
+      <h1 class="m-0">Jornada de Votaciones 2023</h1>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-4">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-2">
           <li class="nav-item">
             <a class="nav-link active text-primary" aria-current="page" href="/">Inicio</a>
           </li>
@@ -35,6 +36,9 @@
           </li>
           <li class="nav-item active">
             <a class="nav-link font-weight-bold" href="/municipal">Municipal</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link font-weight-bold" href="/grafico">Estadísticas</a>
           </li>
         </ul>
       </div>
@@ -51,11 +55,11 @@
       <div class="col-lg-4 col-md-6 col-12 mt-4 mb-4">
         <div class="card mx-auto rounded-4 shadow-lg border-0" style="width: 18rem;">
           <a href="/presidente">
-            <img src="/assets/img/imagen.avif" class="card-img-top rounded-top-4" alt="...">
+            <img src="/assets/img/empresa.jpeg" class="card-img-top rounded-top-4" alt="...">
           </a>
           <div class="card-body">
-            <h2>Presidente de la Republica</h2>
-            <p class="card-text">VOTOS</p>
+            <h2>Presidente de la República</h2>
+            <p class="card-text">Votos totales efectuados</p>
             <p class="card-text" id="votos1">0</p>
           </div>
         </div>
@@ -63,11 +67,11 @@
       <div class="col-lg-4 col-md-6 col-12 mt-4 mb-4 mx-auto">
         <div class="card mx-auto rounded-4 shadow-lg border-0" style="width: 18rem;">
           <a href="/gobernador">
-            <img src="/assets/img/imagen.avif" class="card-img-top rounded-top-4" alt="...">
+            <img src="/assets/img/empresa.jpeg" class="card-img-top rounded-top-4" alt="...">
           </a>
           <div class="card-body">
             <h2>Gobernador</h2>
-            <p class="card-text">VOTOS</p>
+            <p class="card-text">Votos totales efectuados</p>
             <p class="card-text" id="votos2">0</p>
           </div>
         </div>
@@ -75,11 +79,11 @@
       <div class="col-lg-4 col-md-6 col-12 mt-4 mb-4">
         <div class="card mx-auto rounded-4 shadow-lg border-0" style="width: 18rem;">
           <a href="/municipal">
-            <img src="/assets/img/imagen.avif" class="card-img-top rounded-top-4" alt="...">
+            <img src="/assets/img/empresa.jpeg" class="card-img-top rounded-top-4" alt="...">
           </a>
           <div class="card-body">
             <h2>Presidente Municipal</h2>
-            <p class="card-text">VOTOS</p>
+            <p class="card-text">Votos totales efectuados</p>
             <p class="card-text" id="votos3">0</p>
           </div>
         </div>
@@ -126,8 +130,14 @@
       marker = new google.maps.Marker({
         position: { lat: 19.32491607904334, lng: -103.75702976599368 },
         map: map,
+        url: '/grafico',
         title: "Casilla de votación",
       })
+
+      google.maps.event.addListener(marker, 'click', function () {
+        window.location.href = marker.url;
+        window.open(this.url, '_blank');
+      });
     }
     function updateCoords(lat, lng) {
       let nuevaUbicacion = new google.maps.LatLng(lat, lng)
