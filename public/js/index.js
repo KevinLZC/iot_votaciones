@@ -1,4 +1,4 @@
-const socket = new WebSocket("ws://iot-votaciones.fly.dev:3000")
+const socket = new WebSocket("wss://iot-votaciones.fly.dev")
 
 socket.addEventListener("open", (event) => {
   console.log("WebSocket connection opened", event);
@@ -34,7 +34,7 @@ async function getCount() {
 socket.addEventListener("message", async (event) => {
   let messageReceived = JSON.parse(event.data)
   await postData(messageReceived)
-  getCount()
+  await getCount()
 })
 
 getCount()
