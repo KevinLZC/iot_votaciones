@@ -113,39 +113,44 @@
     crossorigin="anonymous"></script>
   <script src="/assets/js/index.js"></script>
   <script>
+    // variables globales del mapa
     let map, marker, lat, lng
 
+    // función para inicializar el mapa
     function initMap() {
+      // se define el mapa
       map = new google.maps.Map(document.getElementById("locationMap"), {
         center: { lat: 19.32491607904334, lng: -103.75702976599368 },
         zoom: 12,
       })
-
+      // se define el marcador
       marker = new google.maps.Marker({
         position: { lat: 19.32491607904334, lng: -103.75702976599368 },
         map: map,
         url: '/grafico',
         title: "Casilla de votación",
       })
-
+      // se define el evento click del marcador
       google.maps.event.addListener(marker, 'click', function () {
         window.location.href = marker.url;
         window.open(this.url, '_blank');
       });
     }
 
+    // función para actualizar la ubicación del marcador
     function updateCoords(lat, lng) {
       let nuevaUbicacion = new google.maps.LatLng(lat, lng)
       marker.setPosition(nuevaUbicacion)
       map.setCenter(nuevaUbicacion)
     }
 
+    // se obtiene la ubicación del último voto recibido
     fetch('/getlastlocation')
       .then(response => response.json())
       .then(data => {
         updateCoords(data.Datos[4].Latitud, data.Datos[4].Longitud)
       })
-
+    // se crea la instancia para obtener los datos del websocket
     socket.addEventListener("message", async (event) => {
       let messageReceived = JSON.parse(event.data)
       updateCoords(messageReceived.Datos[4].Latitud, messageReceived.Datos[4].Longitud)

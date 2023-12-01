@@ -1,6 +1,7 @@
 const Voto = require("../models/voto")
 
 module.exports = {
+  // función para agregar un voto a la base de datos
   addVoto: (req, res) => {
     const nuevoVoto = Voto({
       ID_Casilla: req.body.ID_Casilla,
@@ -40,6 +41,7 @@ module.exports = {
         res.status(500).json({ message: 'Error interno del servidor' });
       });
   },
+  // función para contar los votos por cada uno de los candidatos
   getCount: async (req, res) => {
     let candidatos = [
       [
@@ -77,10 +79,12 @@ module.exports = {
       res.json(data)
     })
   },
+  // función para obtener la última ubicación del voto
   getLastLocation: async (req, res) => {
     let data = await Voto.find().exists("timestamp").sort({timestamp: -1}).limit(1)
     res.json(data[0])
   },
+  // función para eliminar todas las votaciones de la base de datos
   deleteAll: async (req, res) => {
     await Voto.deleteMany({})
     res.json({message: "Datos eliminados"})

@@ -1,9 +1,11 @@
-
+// id de los canvas
 let $graficaPresidente = document.querySelector("#graficaPresidente")
 let $graficaGobernador = document.querySelector("#graficaGobernador")
 let $graficaMunicipal = document.querySelector("#graficaMunicipal")
 
+// creando el websocket
 socket.addEventListener("message", () => {
+  // se eliminan los canvas para actualizarlos con las nuevas gráficas
   document.getElementById("divPresidente").removeChild($graficaPresidente)
   $graficaPresidente = document.createElement('canvas')
   $graficaPresidente.id = 'graficaPresidente'
@@ -20,7 +22,7 @@ socket.addEventListener("message", () => {
   document.getElementById("divMunicipal").appendChild($graficaMunicipal)
   getDatasets()
 })
-
+// función para obtener los datos de la base de datos y generar las gráficas
 async function getDatasets() {
   let presidentesData = []
   let gobernadoresData = []
@@ -33,6 +35,7 @@ async function getDatasets() {
       gobernadoresData.push(data[3], data[4], data[5])
       municipalesData.push(data[6], data[7], data[8])
     })
+  // inicializando las gráficas
   initChart(
     $graficaPresidente,
     presidentesData.map((candidato) => candidato.noVotos),
@@ -53,6 +56,7 @@ async function getDatasets() {
   )
 }
 
+// función para inicializar las gráficas
 function initChart(canvas, dataset, labels, etiquetas) {
   const datasetCandidato = {
     label: labels,
@@ -93,5 +97,5 @@ function initChart(canvas, dataset, labels, etiquetas) {
     }
   });
 }
-
+// llamando a la función para obtener los datos de la base de datos y generar las gráficas
 getDatasets()
