@@ -27,62 +27,39 @@ mongoose
 const Server = htpp.createServer(app)
 const wss = new WebSocket.Server({ server: Server })
 
-const clientId = 'wss_' + Math.random().toString(16).substr(2, 8)
-const host = `wss://${process.env.EMQX_HOST}:${process.env.EMQX_PORT}/mqtt`
+const clientId = 'ws_' + Math.random().toString(16).substr(2, 8);
+const host = `mqtt://test.mosquitto.org:1883`;
 const options = {
   clientId,
   clean: true,
   connectTimeout: 4000,
-  username: process.env.EMQX_USERNAME,
-  password: process.env.EMQX_PASSWORD,
   reconnectPeriod: 1000,
-}
+};
 const client = mqtt.connect(host, options)
+
 client.subscribe("/iot/votaciones/test", (error) => {
   if (error) {
-    console.log('subscribe error:', error)
-    return
+    console.log('subscribe error:', error);
+    return;
   }
-  console.log(`Subscribe to topic /iot/votaciones/test`)
-})
+  console.log(`Subscribe to topic /iot/votaciones/test`);
+});
+
+let websocket
+
+client.on('message', (topic, message) => {
+  message = message.toString();
+  if(websocket){
+    websocket.send(message)
+  }
+});
 
 wss.on("connection", (ws) => {
-  ws.on('error', console.error)
-  client.on('message', (topic, message) => {
-    message = message.toString();
-    console.log(message)
-    const dataToSend = message
-    ws.send(dataToSend);
-  });
+  websocket = ws
 });
 
 const PORT = process.env.PORT || 3000
 
 Server.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`)
-})  
-
-/*
-  {
-    cargoPresidente: {
-      partido: FN,
-      candidato: Pepepecas
-    },
-    cargoGobernador: {
-      partido: PC,
-      candidato: Pepepecas
-    },
-    cargoMunicipal: {
-      partido: FN,
-      candidato: Pepepecas
-    },
-    fecha: {
-      dia: '30/nov/2023',
-      hora: '12:00:00'
-    },
-    ubicacion: {
-      lat: 123456789,
-      lng: 123456789
-    }
-  }
-*/
+})

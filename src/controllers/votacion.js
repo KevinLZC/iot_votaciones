@@ -1,5 +1,4 @@
 const Voto = require("../models/voto")
-const Estado = require("../models/estado");
 
 module.exports = {
   addVoto: (req, res) => {
@@ -29,12 +28,11 @@ module.exports = {
           Latitud: req.body.Datos[4].Latitud,
           Longitud: req.body.Datos[4].Longitud
         }
-      ]
+      ],
     })
     nuevoVoto
       .save()
       .then((data) => {
-        console.log(data)
         res.status(200).json({ message: 'Operación exitosa' });
       })
       .catch((error) => {
@@ -42,10 +40,45 @@ module.exports = {
         res.status(500).json({ message: 'Error interno del servidor' });
       });
   },
-  updateEstado: async (req, res) => {
-    const update = { nombre: "Kevin" }
-    const filter = { partido: req.body.partido, nombre: req.body.candidato }
-    let estado = Estado.find({ filter })
-    console.log(estado.estado)
+  getCount: async (req, res) => {
+    let candidatos = [
+      [
+        "Julieta Miramontes",
+        "Maximiliano Ortíz",
+        "Hiromi Mayoral",
+      ],
+      [
+        "Axel Mora",
+        "Lina Diaz",
+        "Victor Barboza ",
+      ],
+      [
+        "Federico Aguilar",
+        "Teodoro Brambilia",
+        "Gabriela Gallardo",
+      ],
+    ]
+
+    let conteo = []
+
+    for (let candidatura = 0; candidatura < candidatos.length; candidatura++) {
+      for (let candidato = 0; candidato < candidatos[candidatura].length; candidato++) {
+        let filter = `Datos.${candidatura}.Candidato`
+        conteo.push(Voto.countDocuments({ [filter]: candidatos[candidatura][candidato] })
+          .then((data) => {
+            return {
+              nombre: candidatos[candidatura][candidato],
+              noVotos: data
+            }
+          }))
+      }
+    }
+    Promise.all(conteo).then((data) => {
+      res.json(data)
+    })
+  },
+  getLastLocation: async (req, res) => {
+    let data = await Voto.find().exists("timestamp").sort({timestamp: -1}).limit(1)
+    res.json(data[0])
   }
 }
