@@ -15,6 +15,10 @@ router.post("/addVotacion", (req, res) => {
   votoController.addVoto(req, res)
 })
 
+router.get("/deleteVotacion", (req, res) => {
+  votoController.deleteAll(req, res)
+})
+
 router.get("/count", (req, res) => {
   votoController.getCount(req, res)
 })

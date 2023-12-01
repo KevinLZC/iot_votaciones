@@ -80,5 +80,9 @@ module.exports = {
   getLastLocation: async (req, res) => {
     let data = await Voto.find().exists("timestamp").sort({timestamp: -1}).limit(1)
     res.json(data[0])
+  },
+  deleteAll: async (req, res) => {
+    await Voto.deleteMany({})
+    res.json({message: "Datos eliminados"})
   }
 }
